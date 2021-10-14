@@ -12,17 +12,33 @@ This github action deploys a java application to the Azure Kubernetes Service (A
 - Prepopulated Contrast Security and Azure JSON objects - details within 'Inputs' section
 
 ## Inputs
-- `contrast-security-credentials-file`
-  - REQUIRED: YES
-  - Description: "The configuration contents for the Contrast Security Java Agent - used to communication with Contrast Security Team Server. 
-  - Default: No Default Value  
 - `azure-credentials-file`
-  - REQUIRED: YES
-  - Description ""
+  - Description: 'The configuration file contents for Azure-specific logins, regions, etc...'
+  - REQUIRED: true
   - Default: No Default Value
-- `application-manifests`
-  - REQUIRED: YES
-  - Description: "Manifest files containing the kubernetes deployments"
+- `contrast-security-credentials-file`
+  - Description: 'The configuration file contents for the Contrast Security Java Agent - used to communication with Contrast Security Team Server'
+  - REQUIRED: true
+  - Default: No Default Value
+- `application-manifest`
+  - Description: 'Application manifest file location required for kubernetes deployment'
+  - REQUIRED: true
+  - Default: No Default Value
+- `application-dockerfile`
+  - Description: 'dockerfile location required for docker build'
+  - REQUIRED: true
+  - Default: No Default Value
+- `application-output-image-name-tag:
+  - Description: 'output image name/tag that will be deployed to kubernetes cluster'
+  - REQUIRED: true
+  - Default: No Default Value
+- `cluster-name`
+  - Description: 'aks cluster name'
+  - REQUIRED: true
+  - Default: No Default Value
+- `application-artifact`
+  - Description: 'artifacts location associated with the docker build'
+  - REQUIRED: false
   - Default: No Default Value
 
 ## Documentation
@@ -35,12 +51,16 @@ Can be found at these links:
 
 ```sh
 - name: Contrast Security Azure Kubernetes Service Deployment
-        uses: admiralappsec/aks-github-action@main
+        uses: admiralappsec/aks-github-action@v1
         id: contrast-deployment
         with:
           contrast-security-credentials-file: ${{ secrets.CONTRAST_CREDS_FILE }}
           azure-credentials-file: ${{ secrets.AZURE_CREDS_FILE }}
-          application-manifests: '/manifests/manifest1.yml'
+          application-manifest: ${{ env.APPLICATION_MANIFEST }}
+          application-dockerfile: ${{ env.APPLICATION_DOCKERFILE }}
+          application-output-image-name-tag: ${{ env.IMAGE_NAME_TAG }}
+          cluster-name: ${{ env.CLUSTER_NAME }}
+          application-artifact: ${{ env.APPLICATION_ARTIFACT }}
 ```
 
 ## Development
