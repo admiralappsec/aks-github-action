@@ -1,7 +1,7 @@
 # aks-contrast-security-github-action
 
 This github action builds and deploys a java application to the Azure Kubernetes Service (AKS) with a Contrast Security Java Agent.
-...
+
 ## Prerequisites
 
 - An Azure Service Principle with enough permissions to: 
